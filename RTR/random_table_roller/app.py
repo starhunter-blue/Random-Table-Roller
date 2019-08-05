@@ -3,11 +3,23 @@ import PySimpleGUI as sg
 def run():
     layout = [[sg.Text("Random Table")],
               [sg.In(), sg.FileBrowse(file_types = (("Text Files", ".txt"), ("All Files", "*.*")))],
-              [sg.Open(), sg.Cancel()]]
+              [sg.Button(button_text="Randomize!"), sg.Exit()]]
+              
     
     window = sg.Window("Random Table Roller", layout)
-    event, values = window.Read()
+    
+    while True:
+        event, values = window.Read()
+        if event is "Randomize!":
+            f = sg.filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+            f.write("Test")
+            f.close()
+        if event is None or "Exit":
+            break
+        print(event, values)
+    
     window.Close()
+    
 
     file_name = values[0]
     print(event, values)
