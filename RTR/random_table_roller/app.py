@@ -1,14 +1,19 @@
 import PySimpleGUI as sg
-import sys
 
 def run():
-      if len(sys.argv) == 1:
-            fname = sg.PopupGetFile(message = "Open Random Table", file_types= (("All Files", "*.*"), ("Text Files", ".txt")))
-      else:
-            fname = sys.argv[1]
+    layout = [[sg.Text("Random Table")],
+              [sg.In(), sg.FileBrowse(file_types = (("Text Files", ".txt"), ("All Files", "*.*")))],
+              [sg.Open(), sg.Cancel()]]
+    
+    window = sg.Window("Random Table Roller", layout)
+    event, values = window.Read()
+    window.Close()
 
-      if not fname:
-            sg.Popup("Cancel", "No filename supplied")
-            raise SystemExit("Cancelling: no filename supplied")
-      else:
-            sg.Popup('The filename you chose was', fname)
+    file_name = values[0]
+    print(event, values)
+
+    if not file_name:
+        sg.Popup("Cancel", "No filename1 supplied")
+        raise SystemExit("Cancelling: No filename supplied")
+    else:
+        sg.Popup("The filename was", file_name)
