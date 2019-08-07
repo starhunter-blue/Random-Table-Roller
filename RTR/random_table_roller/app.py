@@ -1,5 +1,9 @@
-import PySimpleGUI as sg
-import random_table_roller.interface.gui as window
+from random_table_roller.interface.gui import GUI
 
 def run():
-    window.display()
+    USER_INTERFACE = GUI(callback)
+
+    USER_INTERFACE.display()
+
+def callback():
+    pass
