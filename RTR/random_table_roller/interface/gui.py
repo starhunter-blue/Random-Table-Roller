@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QFileDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QFileDialog, QMessageBox
+
 
 class GUI:
 
@@ -29,7 +30,8 @@ class GUI:
     
     def clicked_load(self):
         filename = QFileDialog.getOpenFileName(filter = "Text Files (*.txt) ;; All Files (*.*)")[0]
-        self.on_button_clicked("load", filename)
+        if filename:
+            self.on_button_clicked("load", filename)
 
     def clicked_save(self):
         file_dialog = QFileDialog()
@@ -42,3 +44,10 @@ class GUI:
     def save_results(self):
         file_dialog = QFileDialog()
         file_dialog.getSaveFileName()
+
+    def show_empty_file_loaded_error(self):
+        alert = QMessageBox()
+        alert.setWindowTitle("Error")
+        alert.setIcon(QMessageBox.Critical)
+        alert.setText("Loaded file was empty")
+        alert.exec_()
