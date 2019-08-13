@@ -9,3 +9,12 @@ class UserInputException(GUIException):
 
 class FileEmptyException(UserInputException):
     pass
+
+class FaultyRandomizerException(UserInputException):
+    pass
+
+class FaultyTableException(FaultyRandomizerException):
+    pass
+
+class InvalidEntryNumberingException(FaultyTableException):
+    pass
