@@ -18,3 +18,6 @@ class FaultyTableException(FaultyRandomizerException):
 
 class InvalidEntryNumberingException(FaultyTableException):
     pass
+
+class DuplicateEntryException(FaultyTableException):
+    pass
