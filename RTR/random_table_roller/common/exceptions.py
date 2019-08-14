@@ -21,3 +21,9 @@ class InvalidEntryNumberingException(FaultyTableException):
 
 class DuplicateEntryException(FaultyTableException):
     pass
+
+class EntryMissingException(FaultyTableException):
+    pass
+
+class UnclearTableNameException(FaultyTableException):
+    pass
