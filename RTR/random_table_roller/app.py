@@ -38,11 +38,7 @@ def store_randomizer(randomizer):
 def parse_randomizer(randomizer):
     blank_line_regex = r"(?:\r?\n){2,}"
     elements = re.split(blank_line_regex, randomizer.strip())
-    parsed_randomizer = Randomizer()
-    parsed_randomizer.set_name(elements[0])
-
-    for element in elements[1:]:
-        parsed_randomizer.add_table(element)
+    parsed_randomizer = Randomizer(elements[0], elements[1:])
 
     return parsed_randomizer
 

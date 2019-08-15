@@ -1,11 +1,18 @@
 from random_table_roller.common.exceptions import FaultyRandomizerException
+from random_table_roller.common.table import Table
 import re
 
 class Randomizer:
     
-    def __init__(self):
-        name = ""
-        tables = {}
+    def __init__(self, name, raw_tables):
+        self.name = name
+        self.table_registry = {}
+
+        for raw_table in raw_tables:
+            table = Table(raw_table.split("\n"))
+            self.table_registry[table.name] = table
+
+        print(self.table_registry)
 
     def set_name(self, name):
         self.name = name

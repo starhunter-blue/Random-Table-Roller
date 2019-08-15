@@ -1,5 +1,5 @@
 import re
-from exceptions import *
+from random_table_roller.common.exceptions import *
 
 class Table:
     ENTRY_NUMBERING_VALID_REGEX = re.compile(r"(\d+(-\d+)*:)")
@@ -54,26 +54,27 @@ class Table:
 class Entry:
     @staticmethod
     def decompose_into_components(entry_value):
-        pass
+        split_components = entry_value.split("-->", 1)
+
+        first_component_text = split_components[0]
+
+        if len(split_components) < 2:
+            return
+        second_component_text = split_components[0].strip()
+
+        if second_component_text[0] == "[" and second_component_text[-1:] == "]":
+            pass
+        else: 
+            pass
+
+        #if len(split_components) == 1
+        #entry return = split_components[0]
+
+        #if len(split_components) == 2
+        #entry return = split_components[0] + parsed/rolled split_component[1]
+
+        #else fatal error
+
 
     def __init__(self, entry_value, table_registry):
         pass
-
-
-test1 = []
-test2 = []
-test3 = []
-test4 = []
-test5 = []
-test1.append("<Test1>")
-test1.append("1: A")
-test1.append("2-3: B")
-test1.append("4: C")
-table = Table(test1)
-table_registry = {}
-table_registry[table.name] = table 
-table.parse_raw_content(table_registry)
-
-strtest = "aaaaa --> aaaa --> aa"
-spli = strtest.split("-->", 1)
-print(spli)
