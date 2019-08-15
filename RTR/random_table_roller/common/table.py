@@ -3,6 +3,8 @@ from exceptions import *
 
 class Table:
     ENTRY_NUMBERING_VALID_REGEX = re.compile(r"(\d+(-\d+)*:)")
+    ENTRY_SINGLE_NUMBER_REGEX = re.compile(r"^(\d+):(.*)")
+    ENTRY_RANGE_REGEX = re.compile(r"^(\d+-\d+):(.*)")
 
     @staticmethod
     def is_entry_numbering_valid(entry):
@@ -35,9 +37,27 @@ class Table:
         for entry in self.raw_content:
             if not Table.is_entry_numbering_valid(entry):
                 raise InvalidEntryNumberingException("Table " + self.name + " contains incorrectly numbered entry " 
-                                                        + entry)       
+                                                        + entry)
+
+            single_entry = re.search(Table.ENTRY_SINGLE_NUMBER_REGEX, entry)
+            range_entry = re.search(Table.ENTRY_RANGE_REGEX, entry)
+            
+            try:
+                if single_entry is not None:
+                    entry_nr = int(single_entry.group(1))
+                    entry_value = single_entry.group(2)
+                    print(str(entry_nr) + " " + entry_value)
+            except RandomTableRollerException:
+                pass           
 
 
+class Entry:
+    @staticmethod
+    def decompose_into_components(entry_value):
+        pass
+
+    def __init__(self, entry_value, table_registry):
+        pass
 
 
 test1 = []
@@ -53,3 +73,7 @@ table = Table(test1)
 table_registry = {}
 table_registry[table.name] = table 
 table.parse_raw_content(table_registry)
+
+strtest = "aaaaa --> aaaa --> aa"
+spli = strtest.split("-->", 1)
+print(spli)
