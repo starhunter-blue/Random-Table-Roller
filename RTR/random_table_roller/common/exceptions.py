@@ -27,3 +27,9 @@ class EntryMissingException(FaultyTableException):
 
 class UnclearTableNameException(FaultyTableException):
     pass
+
+class EmptyTableException(FaultyTableException):
+    pass
+
+class TableNotYetParsedException(RandomTableRollerException):
+    pass
