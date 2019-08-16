@@ -59,12 +59,14 @@ class Table:
                 pass
 
     def to_string(self):
+        """Returns the table as a string"""
+
         string = "\n\n"
         string += self.name
 
         for key in self.content:
             entry_string = str(key) + ": " + self.content[key].to_string()
-            string += "\n" + entry_string 
+            string += "\n" + entry_string
 
         return string            
 
@@ -95,8 +97,25 @@ class Entry:
 
 
     def __init__(self, entry_value, table_registry):
-        pass
+        value_split = entry_value.split("-->", 1)
+        self.text_value = value_split[0].strip()
+        self.subtable_value = None
+
+        if len(value_split) > 1:
+            subtable_raw = value_split[1].strip()
+            if subtable_raw[0] == "[":
+                if subtable_raw[-1:] != "]":
+                    raise UnclearSubEntryException("Entry >" + entry_value + "< is unclear.\n"
+                                                   + "Subtable Entries must start and end with [],"
+                                                   + "Linked tables must not start or end with []")
+                subtable = create_subtable(subtable_raw.strip("[").strip("]"))
+
+        def create_subtable(content):
+            subtable_name = "Entry_" + str(self.__hash__)
+            content_array = content.split(",")
+            
 
     def to_string(self):
+        """Returns entry as a string"""
         #TODO
-        return "PLACEHOLDER"
+        return self.text_value

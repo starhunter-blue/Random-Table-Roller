@@ -31,5 +31,8 @@ class UnclearTableNameException(FaultyTableException):
 class EmptyTableException(FaultyTableException):
     pass
 
+class UnclearSubEntryException(FaultyTableException):
+    """Raised when the value after a --> in a Table Entry is unclear, usually because wrong [] use"""
+
 class TableNotYetParsedException(RandomTableRollerException):
     pass
