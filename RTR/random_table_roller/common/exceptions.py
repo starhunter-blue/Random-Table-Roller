@@ -35,4 +35,7 @@ class UnclearSubEntryException(FaultyTableException):
     """Raised when the value after a --> in a Table Entry is unclear, usually because wrong [] use"""
 
 class TableNotYetParsedException(RandomTableRollerException):
-    pass
+    """Raised when an operation is performed on a table that requires content that isn't parsed yet"""
+
+class MissingTableException(FaultyTableException):
+    """Raised when a subtable calls for a table taht isn't found in the randomizer"""

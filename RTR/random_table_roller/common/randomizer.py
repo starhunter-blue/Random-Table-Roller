@@ -15,11 +15,8 @@ class Randomizer:
         for table_name in self.table_registry:
             self.table_registry[table_name].parse_raw_content(self.table_registry)
 
-        print(self.table_registry)
-
     def to_string(self):
         string = self.name
-        print(self.table_registry["<Table 1>"].to_string())
         for key in self.table_registry:
             string += self.table_registry[key].to_string()
 

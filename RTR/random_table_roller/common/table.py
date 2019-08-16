@@ -11,6 +11,7 @@ class Table:
         return re.match(Table.ENTRY_NUMBERING_VALID_REGEX, entry) != None
 
     def __init__(self, raw_table):
+        print(raw_table)
         self.name = raw_table[0]
         self.raw_content = raw_table[1:]
         self.content = {}
@@ -97,12 +98,15 @@ class Entry:
 
 
     def __init__(self, entry_value, table_registry):
-        def create_subtable(content):
+        def create_subtable(content):     
             subtable_name = "<<Entry_" + str(self.__hash__()) + ">>"
             content_array = content.split(",")
-            subtable = subtable_name
+            subtable_raw = [subtable_name]
             for entry in content_array:
-                subtable += "\n" + entry.strip()
+                subtable_raw.append(entry.strip())
+
+            subtable = Table(subtable_raw)
+            subtable.parse_raw_content(table_registry)
             return subtable
 
         value_split = entry_value.split("-->", 1)
@@ -116,13 +120,24 @@ class Entry:
                     raise UnclearSubEntryException("Entry >" + entry_value + "< is unclear.\n"
                                                    + "Subtable Entries must start and end with [],"
                                                    + "Linked tables must not start or end with []")
-                subtable = create_subtable(subtable_raw.strip("[").strip("]"))
-                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-                print(subtable)
-
-
+                self.subtable_value = create_subtable(subtable_raw.strip("[").strip("]"))
+            else:
+                if subtable_raw not in table_registry:
+                    raise MissingTableException("Table <" + subtable_raw + "> not found")
+                self.subtable_value = table_registry[subtable_raw]
+                
 
     def to_string(self):
         """Returns entry as a string"""
         #TODO
-        return self.text_value
+        return_string = self.text_value
+        if self.subtable_value is not None:
+            return_string += "--> ["
+            subtable_strings = self.subtable_value.to_string().split("\n")
+            subtable_strings = [value for value in subtable_strings if value != ""]
+            
+            for entry in subtable_strings[1:]:
+                return_string += entry + ", "
+            return_string.strip(",")
+            return_string += "] \n"
+        return return_string

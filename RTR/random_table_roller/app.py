@@ -38,7 +38,7 @@ def load_randomizer(filename):
 def store_randomizer(randomizer):
     parsed_randomizer = parse_randomizer(randomizer)
     randomizers[randomizer.split("\n")[0]] = parsed_randomizer
-    print(randomizers)
+    #print(randomizers)
 
 def parse_randomizer(randomizer):
     blank_line_regex = r"(?:\r?\n){2,}"
