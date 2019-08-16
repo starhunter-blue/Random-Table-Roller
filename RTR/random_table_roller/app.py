@@ -9,7 +9,7 @@ def run():
     
     USER_INTERFACE.display()
 
-def callback(event, filename):
+def callback(event, filename = None):
     print("Button Event: %s" % event)
 
     try:
@@ -21,6 +21,11 @@ def callback(event, filename):
 
         if event == "save":
             print(filename)
+
+        if event == "randomize":
+            for name in randomizers:
+                print(randomizers[name].to_string())
+
 
     except FileEmptyException:
         USER_INTERFACE.show_empty_file_loaded_error()

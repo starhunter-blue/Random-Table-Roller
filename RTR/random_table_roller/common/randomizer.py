@@ -14,6 +14,14 @@ class Randomizer:
 
         print(self.table_registry)
 
+    def to_string(self):
+        string = self.name
+        print(self.table_registry["<Table 1>"].to_string())
+        for key in self.table_registry:
+            string += self.table_registry[key].to_string()
+
+        return string
+
     def set_name(self, name):
         self.name = name
 

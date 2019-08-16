@@ -19,6 +19,10 @@ class GUI:
         load_table_button.clicked.connect(self.clicked_load)
         layout.addWidget(load_table_button)
 
+        randomize_button = QPushButton("Randomize!")
+        randomize_button.clicked.connect(self.clicked_randomize)
+        layout.addWidget(randomize_button)
+
         save_button = QPushButton("Save Results")
         save_button.clicked.connect(self.clicked_save)
         layout.addWidget(save_button)
@@ -33,12 +37,15 @@ class GUI:
         if filename:
             self.on_button_clicked("load", filename)
 
+    def clicked_randomize(self):
+        self.on_button_clicked("randomize")
+
     def clicked_save(self):
         file_dialog = QFileDialog()
         filename = file_dialog.getSaveFileName(filter = "Text Files (*.txt) ;; All Files (*.*)")[0]
         self.on_button_clicked("save", filename)
 
-    def on_button_clicked(self, event, filename):
+    def on_button_clicked(self, event, filename = None):
         self.callback(event, filename)
 
     def save_results(self):

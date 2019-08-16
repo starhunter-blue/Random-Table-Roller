@@ -48,7 +48,18 @@ class Table:
                     entry_value = single_entry.group(2)
                     print(str(entry_nr) + " " + entry_value)
             except RandomTableRollerException:
-                pass           
+                #TODO
+                pass
+
+    def to_string(self):
+        string = "\n\n\n"
+        string += self.name
+
+        for key in self.content:
+            entry_string = str(key) + ": " + self.content[key].to_string()
+            string += entry_string + "\n"
+
+        return string            
 
 
 class Entry:
@@ -78,3 +89,6 @@ class Entry:
 
     def __init__(self, entry_value, table_registry):
         pass
+
+    def to_string(self):
+        return "PLACEHOLDER"
