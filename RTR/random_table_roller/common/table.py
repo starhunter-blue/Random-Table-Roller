@@ -138,6 +138,6 @@ class Entry:
             
             for entry in subtable_strings[1:]:
                 return_string += entry + ", "
-            return_string.strip(",")
-            return_string += "] \n"
+            return_string = return_string.strip(", ")
+            return_string += "]"
         return return_string
