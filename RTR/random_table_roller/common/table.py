@@ -34,19 +34,20 @@ class Table:
         if len(self.raw_content) < 1:
             raise EmptyTableException(self.name + " contains no entries")
 
-        for entry in self.raw_content:
-            if not Table.is_entry_numbering_valid(entry):
+        for raw_entry in self.raw_content:
+            if not Table.is_entry_numbering_valid(raw_entry):
                 raise InvalidEntryNumberingException("Table " + self.name + " contains incorrectly numbered entry " 
-                                                        + entry)
+                                                        + raw_entry)
 
-            single_entry = re.search(Table.ENTRY_SINGLE_NUMBER_REGEX, entry)
-            range_entry = re.search(Table.ENTRY_RANGE_REGEX, entry)
+            single_entry = re.search(Table.ENTRY_SINGLE_NUMBER_REGEX, raw_entry)
+            range_entry = re.search(Table.ENTRY_RANGE_REGEX, raw_entry)
             
             try:
                 if single_entry is not None:
                     entry_nr = int(single_entry.group(1))
                     entry_value = single_entry.group(2)
-                    print(str(entry_nr) + " " + entry_value)
+                    self.content[entry_nr] = Entry(entry_value, table_registry)
+                    
             except RandomTableRollerException:
                 #TODO
                 pass
@@ -57,7 +58,7 @@ class Table:
 
         for key in self.content:
             entry_string = str(key) + ": " + self.content[key].to_string()
-            string += entry_string + "\n"
+            string += "\n" + entry_string 
 
         return string            
 
@@ -91,4 +92,5 @@ class Entry:
         pass
 
     def to_string(self):
+        #TODO
         return "PLACEHOLDER"
