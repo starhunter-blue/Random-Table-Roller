@@ -47,13 +47,19 @@ class Table:
                     entry_nr = int(single_entry.group(1))
                     entry_value = single_entry.group(2)
                     self.content[entry_nr] = Entry(entry_value, table_registry)
+                elif range_entry is not None:
+                    entry_range_str = range_entry.group(1).split("-")
+                    entry_range = range(int(entry_range_str[0]), int(entry_range_str[1]) + 1)
+                    entry_range_value = range_entry.group(2)
+                    for i in entry_range:
+                        self.content[i] = Entry(entry_range_value, table_registry)
                     
             except RandomTableRollerException:
                 #TODO
                 pass
 
     def to_string(self):
-        string = "\n\n\n"
+        string = "\n\n"
         string += self.name
 
         for key in self.content:

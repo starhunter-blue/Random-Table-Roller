@@ -24,7 +24,7 @@ def callback(event, filename = None):
 
         if event == "randomize":
             for name in randomizers:
-                print(randomizers[name].to_string())
+                USER_INTERFACE.update_textbox(randomizers[name].to_string())
 
 
     except FileEmptyException:
