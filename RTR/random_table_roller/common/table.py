@@ -97,6 +97,14 @@ class Entry:
 
 
     def __init__(self, entry_value, table_registry):
+        def create_subtable(content):
+            subtable_name = "<<Entry_" + str(self.__hash__()) + ">>"
+            content_array = content.split(",")
+            subtable = subtable_name
+            for entry in content_array:
+                subtable += "\n" + entry.strip()
+            return subtable
+
         value_split = entry_value.split("-->", 1)
         self.text_value = value_split[0].strip()
         self.subtable_value = None
@@ -109,11 +117,10 @@ class Entry:
                                                    + "Subtable Entries must start and end with [],"
                                                    + "Linked tables must not start or end with []")
                 subtable = create_subtable(subtable_raw.strip("[").strip("]"))
+                print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
+                print(subtable)
 
-        def create_subtable(content):
-            subtable_name = "Entry_" + str(self.__hash__)
-            content_array = content.split(",")
-            
+
 
     def to_string(self):
         """Returns entry as a string"""
