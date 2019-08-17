@@ -7,6 +7,9 @@ class GUIException(RandomTableRollerException):
 class UserInputException(GUIException):
     pass
 
+class NoRandomizerLoadedException(UserInputException):
+    """Raised when user attempts to Randomize with no randomizer loaded"""
+
 class FileEmptyException(UserInputException):
     pass
 
@@ -20,7 +23,7 @@ class InvalidEntryNumberingException(FaultyTableException):
     pass
 
 class DuplicateEntryException(FaultyTableException):
-    pass
+    """Raised when a table contains the same entry number more than once"""
 
 class EntryMissingException(FaultyTableException):
     pass
