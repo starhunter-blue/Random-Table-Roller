@@ -10,7 +10,7 @@ class Randomizer:
 
         for raw_table in raw_tables:
             table = Table(raw_table.split("\n"))
-            self.table_registry[table.name] = table
+            self.table_registry[table.name.strip("<").strip(">")] = table
 
         for table_name in self.table_registry:
             self.table_registry[table_name].parse_raw_content(self.table_registry)

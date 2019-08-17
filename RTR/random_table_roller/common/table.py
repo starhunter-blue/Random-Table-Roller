@@ -11,7 +11,6 @@ class Table:
         return re.match(Table.ENTRY_NUMBERING_VALID_REGEX, entry) != None
 
     def __init__(self, raw_table):
-        print(raw_table)
         self.name = raw_table[0]
         self.raw_content = raw_table[1:]
         self.content = {}
@@ -123,9 +122,9 @@ class Entry:
                 self.subtable_value = create_subtable(subtable_raw.strip("[").strip("]"))
             else:
                 if subtable_raw not in table_registry:
-                    raise MissingTableException("Table <" + subtable_raw + "> not found")
+                    raise MissingTableException("Table " + subtable_raw + " not found")
                 self.subtable_value = table_registry[subtable_raw]
-                
+
 
     def to_string(self):
         """Returns entry as a string"""
@@ -135,7 +134,7 @@ class Entry:
             return_string += "--> ["
             subtable_strings = self.subtable_value.to_string().split("\n")
             subtable_strings = [value for value in subtable_strings if value != ""]
-            
+
             for entry in subtable_strings[1:]:
                 return_string += entry + ", "
             return_string = return_string.strip(", ")
