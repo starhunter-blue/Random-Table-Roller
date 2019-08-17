@@ -26,7 +26,7 @@ class DuplicateEntryException(FaultyTableException):
     """Raised when a table contains the same entry number more than once"""
 
 class EntryMissingException(FaultyTableException):
-    pass
+    """Raised when not all entry numbers are continuously present in a table"""
 
 class UnclearTableNameException(FaultyTableException):
     pass

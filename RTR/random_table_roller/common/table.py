@@ -2,6 +2,7 @@ import re
 import random
 from random_table_roller.common.exceptions import DuplicateEntryException,\
                                                   EmptyTableException,\
+                                                  EntryMissingException,\
                                                   InvalidEntryNumberingException,\
                                                   MissingTableException,\
                                                   TableNotYetParsedException,\
@@ -84,6 +85,10 @@ class Table:
                     self.content[i] = Entry(entry_range_value, table_registry)
                     if i > self.table_size:
                         self.table_size = i
+
+        for i in range(1, self.table_size + 1):
+            if i not in self.content:
+                raise EntryMissingException(self.name + " is missing entry number " + str(i))
 
 
     def to_string(self):
