@@ -9,6 +9,9 @@ class Randomizer:
         self.name = name
         self.table_registry = {}
 
+        if not raw_tables:
+            raise FaultyRandomizerException("Randomizer contains no tables")
+
         for raw_table in raw_tables:
             table = Table(raw_table.split("\n"))
             self.table_registry[table.name.strip("<").strip(">")] = table

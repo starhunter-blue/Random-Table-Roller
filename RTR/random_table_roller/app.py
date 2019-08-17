@@ -1,7 +1,11 @@
+"""Main Module for the RTR"""
+
 import re
-from random_table_roller.interface.gui import GUI
 from random_table_roller import USER_INTERFACE, randomizers, last_randomizer, last_result
-from random_table_roller.common.exceptions import FileEmptyException, NoRandomizerLoadedException
+from random_table_roller.common.exceptions import FaultyRandomizerException,\
+                                                  FileEmptyException,\
+                                                  NoRandomizerLoadedException,\
+                                                  RandomTableRollerException
 from random_table_roller.common.randomizer import Randomizer
 
 def run():
@@ -11,8 +15,7 @@ def run():
 
 def callback(event, filename=None):
     """The callback function for the GUI to report user interaction events"""
-    print("Button Event: %s" % event)
-
+    
     try:
         if event == "load":
             loaded_randomizer = load_randomizer(filename)
@@ -30,12 +33,17 @@ def callback(event, filename=None):
             last_result = str(randomizers[last_randomizer].randomize())
             USER_INTERFACE.update_textbox(last_result)
 
-
     except FileEmptyException:
         USER_INTERFACE.show_error("Loaded file was empty")
 
     except NoRandomizerLoadedException:
         USER_INTERFACE.show_error("No randomizer loaded")
+
+    except FaultyRandomizerException as e:
+        USER_INTERFACE.show_error(str(e))
+
+    except RandomTableRollerException as e:
+        USER_INTERFACE.show_error(str(e))
 
 def load_randomizer(filename):
     """Loads up a randomizer file from the provided filename."""

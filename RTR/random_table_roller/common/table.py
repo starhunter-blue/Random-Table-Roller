@@ -51,7 +51,7 @@ class Table:
         Has to be called after initialization of all tables because it needs to make use of the
         complete table_registry to link up entries with other tables."""
 
-        if self.raw_content is None:
+        if not self.raw_content:
             raise EmptyTableException(self.name + " contains no entries")
 
         for raw_entry in self.raw_content:
@@ -68,7 +68,7 @@ class Table:
                 entry_nr = int(single_entry.group(1))
                 entry_value = single_entry.group(2)
                 if entry_nr in self.content:
-                    raise DuplicateEntryException(self.name + ": " + entry_nr
+                    raise DuplicateEntryException(self.name + ": Entry number " + str(entry_nr)
                                                   + " is used more than once")
                 self.content[entry_nr] = Entry(entry_value, table_registry)
                 if entry_nr > self.table_size:
@@ -79,7 +79,7 @@ class Table:
                 entry_range_value = range_entry.group(2)
                 for i in entry_range:
                     if i in self.content:
-                        raise DuplicateEntryException(self.name + ": " + i
+                        raise DuplicateEntryException(self.name + ": " + str(i)
                                                       + " is used more than once")
                     self.content[i] = Entry(entry_range_value, table_registry)
                     if i > self.table_size:
@@ -126,6 +126,9 @@ class Entry:
         self.subtable_value = None
 
         if len(value_split) > 1:
+            if not value_split[1]:
+                raise UnclearSubEntryException("Entry >" + entry_value + "< is unclear.\n"
+                                               + "--> must always be followed by something")
             subtable_raw = value_split[1].strip()
             if subtable_raw[0] == "[":
                 if subtable_raw[-1:] != "]":
