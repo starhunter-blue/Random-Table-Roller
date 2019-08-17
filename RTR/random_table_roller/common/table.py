@@ -115,8 +115,12 @@ class Entry:
     """Individual entries within a table of a randomizer. Can contain links to other tables."""
 
     def __init__(self, entry_value, table_registry):
-        def create_subtable(content):     
+        def create_subtable(content):    
             subtable_name = "<<Entry_" + str(self.__hash__()) + ">>"
+            regex = re.compile(r"(,)+(?![^[]*])")
+            split_content = [string.strip() for string in re.split(regex, content)]
+            split_content = [string for string in split_content if string != ","]
+            print(split_content)
             content_array = content.split(",")
             subtable_raw = [subtable_name]
             for entry in content_array:
@@ -140,7 +144,8 @@ class Entry:
                     raise UnclearSubEntryException("Entry >" + entry_value + "< is unclear.\n"
                                                    + "Subtable Entries must start and end with [],"
                                                    + "Linked tables must not start or end with []")
-                self.subtable_value = create_subtable(subtable_raw.strip("[").strip("]"))
+                print(subtable_raw[1:len(subtable_raw)-1])
+                self.subtable_value = create_subtable(subtable_raw[1:len(subtable_raw)-1])
             else:
                 if subtable_raw not in table_registry:
                     raise MissingTableException("Table " + subtable_raw + " not found")
