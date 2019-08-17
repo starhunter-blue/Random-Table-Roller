@@ -120,8 +120,7 @@ class Entry:
             regex = re.compile(r"(,)+(?![^[]*])")
             split_content = [string.strip() for string in re.split(regex, content)]
             split_content = [string for string in split_content if string != ","]
-            print(split_content)
-            content_array = content.split(",")
+            content_array = split_content
             subtable_raw = [subtable_name]
             for entry in content_array:
                 subtable_raw.append(entry.strip())
