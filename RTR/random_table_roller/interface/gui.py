@@ -1,3 +1,4 @@
+import random_table_roller.fix_qt_import_error
 from PyQt5.QtWidgets import QApplication, \
                             QWidget, \
                             QPushButton, \

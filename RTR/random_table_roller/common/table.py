@@ -143,7 +143,7 @@ class Entry:
                     raise UnclearSubEntryException("Entry >" + entry_value + "< is unclear.\n"
                                                    + "Subtable Entries must start and end with [],"
                                                    + "Linked tables must not start or end with []")
-                print(subtable_raw[1:len(subtable_raw)-1])
+                
                 self.subtable_value = create_subtable(subtable_raw[1:len(subtable_raw)-1])
             else:
                 if subtable_raw not in table_registry:
