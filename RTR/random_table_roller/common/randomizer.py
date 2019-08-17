@@ -51,10 +51,12 @@ class Randomizer:
         
         total_results_string = ""
         for i in range(number_of_results):
-            results_string = self.name + "\n"
+            results_string = self.name + " Result\n"
 
             for table_name in self.table_registry:
-                results_string += "\n" + table_name
+                if self.table_registry[table_name].subtable == True:
+                    continue
+                results_string += "\n<" + table_name + ">"
                 results_string += "\n" + self.table_registry[table_name].generate_result() + "\n"
 
             if number_of_results > 1:

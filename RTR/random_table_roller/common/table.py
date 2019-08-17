@@ -27,6 +27,7 @@ class Table:
         self.raw_content = raw_table[1:]
         self.content = {}
         self.table_size = 0
+        self.subtable = False
 
         #Check if name follows naming convention
         unclear_name_exception = UnclearTableNameException(self.name
@@ -41,6 +42,9 @@ class Table:
                 raise unclear_name_exception
         else:
             raise unclear_name_exception
+
+        if self.name[:2] == "<<":
+            self.subtable = True
 
     def parse_raw_content(self, table_registry):
         """Turns the raw string content of the table into an actual table with entries.

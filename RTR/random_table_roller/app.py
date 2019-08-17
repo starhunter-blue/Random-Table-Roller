@@ -9,7 +9,7 @@ def run():
     USER_INTERFACE.set_callback(callback)
     USER_INTERFACE.display()
 
-def callback(event, filename = None):
+def callback(event, filename=None):
     """The callback function for the GUI to report user interaction events"""
     print("Button Event: %s" % event)
 
@@ -21,7 +21,7 @@ def callback(event, filename = None):
             store_randomizer(loaded_randomizer)
 
         if event == "save":
-            print(filename)
+            save_results(filename)
 
         if event == "randomize":
             if not last_randomizer:
@@ -32,7 +32,10 @@ def callback(event, filename = None):
 
 
     except FileEmptyException:
-        USER_INTERFACE.show_empty_file_loaded_error()
+        USER_INTERFACE.show_error("Loaded file was empty")
+
+    except NoRandomizerLoadedException:
+        USER_INTERFACE.show_error("No randomizer loaded")
 
 def load_randomizer(filename):
     """Loads up a randomizer file from the provided filename."""
@@ -42,6 +45,7 @@ def load_randomizer(filename):
 
 def store_randomizer(randomizer):
     """Stores a parsed randomizer for use."""
+
     parsed_randomizer = parse_randomizer(randomizer)
     randomizers[parsed_randomizer.name] = parsed_randomizer
     global last_randomizer
@@ -49,9 +53,15 @@ def store_randomizer(randomizer):
 
 def parse_randomizer(randomizer):
     """Turns a raw text randomizer into a Randomizer object, ready for use."""
+
     blank_line_regex = r"(?:\r?\n){2,}"
     elements = re.split(blank_line_regex, randomizer.strip())
     parsed_randomizer = Randomizer(elements[0], elements[1:])
 
     return parsed_randomizer
-    
+
+def save_results(filename):
+    """Saves the last generated randomization as a .txt"""
+
+    with open(filename, "w+") as file:
+        file.write(USER_INTERFACE.get_text_field_content())

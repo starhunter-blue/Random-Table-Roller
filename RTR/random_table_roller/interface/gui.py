@@ -25,7 +25,7 @@ class GUI:
 
         layout = QVBoxLayout()
 
-        load_table_button = QPushButton("Import Table")
+        load_table_button = QPushButton("Import Randomizer")
         load_table_button.clicked.connect(self.clicked_load)
         layout.addWidget(load_table_button)
 
@@ -49,7 +49,7 @@ class GUI:
     def clicked_load(self):
         """Function to be called by Load Table Button"""
 
-        filename = QFileDialog.getOpenFileName(filter = "Text Files (*.txt) ;; All Files (*.*)")[0]
+        filename = QFileDialog.getOpenFileName(filter="Text Files (*.txt) ;; All Files (*.*)")[0]
         if filename:
             self.on_button_clicked("load", filename)
 
@@ -72,14 +72,18 @@ class GUI:
         file_dialog = QFileDialog()
         file_dialog.getSaveFileName()
 
-    def show_empty_file_loaded_error(self):
+    def show_error(self, message):
         alert = QMessageBox()
         alert.setWindowTitle("Error")
         alert.setIcon(QMessageBox.Critical)
-        alert.setText("Loaded file was empty")
+        alert.setText(message)
         alert.exec_()
 
     def update_textbox(self, message):
         """Updates the textbox with randomization results"""
 
         self.text_field.setText(message)
+
+    def get_text_field_content(self):
+        """Returns the text contained in the text field"""
+        return self.text_field.toPlainText()
