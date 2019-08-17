@@ -18,6 +18,7 @@ Randomizers need to follow certain rules to be correctly recognized by the RTR.
 
 ## How to construct a randomizer
 Randomizers can be any file type, although .txt files are recommended.
+For an additional guide, see the example randomizer provided.
 
 * Any text up to the first blank line will be recognized as the name of the randomizer.
 * The name must be separated by at least one blank line. Similarly, every table must be separated by at least one blank line.
@@ -31,3 +32,16 @@ Just ike the randomizer, so must its tables adhere to a certain set of rules.
 * Every table is either a table or a subtable, as marked by the name being enclosed by <>/<<>>.
 ** <TABLE NAME> denotes a regular table. This means the RTR will generate a result from it.
 ** <<TABLE NAME>> denotes a subtable. The RTR will only roll on it if required by the result of another roll.
+*** Example: <Example Table> OR <<Example Subtable>>
+* There must be no blank lines within the table
+* An entry must always start with a single number or a range of numbers on which the result is produced, followed by a :, followed by the entry's value
+*** Example: 1: Example Result OR 1-3: Example Result
+* Every entry must be on a new line
+* Numbers must be used continuously, no skipping
+* Numbers must not be duplicated
+* Entries can have a simple result, or a complex result as denoted by -->. Complex results can either be a subtable written after the -->, or a link to another table
+** In-Line subtables must be enclosed by []. Instead of being written vertically, they are separated by ,. They must not have a name. Other than that, the same rules apply as for any other table.
+*** Example: 1: Result --> [1: Subresult 1, 2: Subresult 2, 3-6: Subresult 3 --> [1: Subsubresult 1, 2: Subsubresult 2]]
+** Links to other tables simply refer to the other table by name.
+*** Example: 1: Result --> Table 1 OR 2: Result --> Subtable 2
+** Complex entries can be nested as deeply as required
